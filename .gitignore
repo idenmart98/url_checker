@@ -1,0 +1,7 @@
+.DS_Store
+.idea
+*.pyc
+venv/
+.vscode/
+settings_local.py
+celerybeat-schedule
