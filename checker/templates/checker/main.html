@@ -35,7 +35,7 @@ $.ajax({
         url: '/urls_create', 
         data: {'urls' : $('#urls').val(), 'erbol':'erbol','csrfmiddlewaretoken': '{{ csrf_token }}'},
         success: function(data){
-            alert(data['success'])
+            alert(data['message'])
         },
     failure: function() {
         

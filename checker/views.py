@@ -13,7 +13,7 @@ def main(request):
 
 def urls_create(request):
     if request.is_ajax():
-        data = {'success': False}
+        data = {'success': False, 'message':'Error'}
         urls = request.POST.get('urls', None)
         created_urls = list(Url.objects.values_list('address',flat=True))
         create_list = []
@@ -23,14 +23,14 @@ def urls_create(request):
                 if url not in created_urls:
                     create_list.append(Url(address=url, status=get_code(url)))
             Url.objects.bulk_create(create_list)
-            data = {'success': True}
+            data = {'success': True, 'message':'Urls created'}
         return JsonResponse(data)
 
 def urls_list(request):
     if request.is_ajax():
+        context = {'success': False, 'user':'not authenticated'}
         if request.user.is_authenticated:
             urls = Url.objects.all()
-            html = render_to_string('checker/url_list.html', {'urls': urls})
-            return HttpResponse(html)
-        html = render_to_string('checker/url_list.html', {'success': False, 'user':'not authenticated'})
+            context = {'urls': urls}
+        html = render_to_string('checker/url_list.html', context)
         return HttpResponse(html)
